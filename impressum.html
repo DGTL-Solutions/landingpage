@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - DGTL Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-page {
+            min-height: 100vh;
+            padding: var(--space-3xl) var(--space-lg);
+            background: var(--white);
+        }
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .legal-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 4px solid var(--black);
+        }
+        .legal-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .legal-section {
+            margin-bottom: var(--space-xl);
+        }
+        .legal-section h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+            color: var(--accent);
+        }
+        .legal-section p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray-dark);
+            margin-bottom: var(--space-sm);
+        }
+        .legal-section a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent);
+            transition: all 0.2s ease;
+        }
+        .legal-section a:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            color: var(--black);
+            text-decoration: none;
+            margin-bottom: var(--space-lg);
+            transition: color 0.2s ease;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+        .protected {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            user-select: none;
+        }
+        .protected-wrap {
+            display: inline;
+        }
+        .hidden-text {
+            position: absolute;
+            left: -9999px;
+            font-size: 0;
+        }
+    </style>
+</head>
+<body>
+    <main class="legal-page">
+        <div class="legal-container">
+            <a href="index.html" class="back-link">&larr; Zurück zur Startseite</a>
+
+            <div class="legal-header">
+                <h1>Impressum</h1>
+            </div>
+
+            <div class="legal-section">
+                <h2>Angaben gemäß § 5 TMG</h2>
+                <p>
+                    <strong>DGTL Solutions GmbH</strong><br>
+                    <span class="protected-wrap" data-addr="street"></span><br>
+                    <span class="protected-wrap" data-addr="city"></span><br>
+                    Deutschland
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Kontakt</h2>
+                <p>
+                    E-Mail: <span class="protected-wrap" data-addr="email"></span>
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Registereintrag</h2>
+                <p>
+                    Eintragung im Handelsregister<br>
+                    Registergericht: Amtsgericht Siegburg<br>
+                    Registernummer wird nach Eintragung ergänzt
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Umsatzsteuer-ID</h2>
+                <p>
+                    Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
+                    Wird nach Erteilung durch das Bundeszentralamt für Steuern ergänzt
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Vertretungsberechtigte Personen</h2>
+                <p>
+                    Geschäftsführer: Ing. Bünyamin Sarikaya
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Berufshaftpflichtversicherung</h2>
+                <p>
+                    Betriebshaftpflichtversicherung und Cyber-Versicherung<br>
+                    Versicherer: Hiscox<br><br>
+                    Der räumliche Geltungsbereich des Versicherungsschutzes umfasst Tätigkeiten in der EU sowie gleichgestellten Staaten.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Streitschlichtung</h2>
+                <p>
+                    Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:<br>
+                    <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>
+                </p>
+                <p>
+                    Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Haftung für Inhalte</h2>
+                <p>
+                    Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+                </p>
+                <p>
+                    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Haftung für Links</h2>
+                <p>
+                    Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
+                </p>
+                <p>
+                    Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Urheberrecht</h2>
+                <p>
+                    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+                </p>
+                <p>
+                    Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Anti-scraping: Assemble protected content via JavaScript
+        (function() {
+            const data = {
+                street: ['L','e','n','d','e','r','s','e','b','e','r','g','s','t','r','.', ' ', '3','2','B'],
+                city: ['5','3','7','2','1', ' ', 'S','i','e','g','b','u','r','g'],
+                email: ['i','n','f','o','@','d','g','t','l','2','4','.','n','e','t']
+            };
+
+            document.querySelectorAll('[data-addr]').forEach(el => {
+                const key = el.dataset.addr;
+                if (data[key]) {
+                    // Add decoy text for scrapers
+                    const decoy = document.createElement('span');
+                    decoy.className = 'hidden-text';
+                    decoy.textContent = 'contact' + Math.random().toString(36) + '@example.com';
+                    el.appendChild(decoy);
+
+                    // Build real content character by character with delays
+                    data[key].forEach((char, i) => {
+                        setTimeout(() => {
+                            el.appendChild(document.createTextNode(char));
+                        }, i * 5);
+                    });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

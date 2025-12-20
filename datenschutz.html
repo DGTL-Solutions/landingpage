@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung - DGTL Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-page {
+            min-height: 100vh;
+            padding: var(--space-3xl) var(--space-lg);
+            background: var(--white);
+        }
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .legal-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 4px solid var(--black);
+        }
+        .legal-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+        .legal-section {
+            margin-bottom: var(--space-xl);
+        }
+        .legal-section h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+            color: var(--accent);
+        }
+        .legal-section p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray-dark);
+            margin-bottom: var(--space-sm);
+        }
+        .legal-section a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent);
+        }
+        .legal-section a:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            color: var(--black);
+            text-decoration: none;
+            margin-bottom: var(--space-lg);
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+        .hidden-text {
+            position: absolute;
+            left: -9999px;
+            font-size: 0;
+        }
+    </style>
+</head>
+<body>
+    <main class="legal-page">
+        <div class="legal-container">
+            <a href="index.html" class="back-link">&larr; Zurück</a>
+
+            <div class="legal-header">
+                <h1>Datenschutz</h1>
+            </div>
+
+            <div class="legal-section">
+                <h2>Verantwortlicher</h2>
+                <p>
+                    DGTL Solutions GmbH<br>
+                    <span class="protected-wrap" data-addr="street"></span><br>
+                    <span class="protected-wrap" data-addr="city"></span><br>
+                    E-Mail: <span class="protected-wrap" data-addr="email"></span>
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Kontaktformular</h2>
+                <p>
+                    Ihre Angaben aus dem Kontaktformular werden zur Bearbeitung Ihrer Anfrage gespeichert (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden gelöscht, sobald sie nicht mehr benötigt werden.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Server-Logs</h2>
+                <p>
+                    Beim Besuch werden automatisch IP-Adresse, Browsertyp, Zeitpunkt und aufgerufene Seiten erfasst (Art. 6 Abs. 1 lit. f DSGVO). Diese Daten werden nicht mit anderen Quellen zusammengeführt.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2>Ihre Rechte</h2>
+                <p>
+                    Sie haben Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Kontaktieren Sie uns oder die zuständige Aufsichtsbehörde (LDI NRW).
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            const data = {
+                street: ['L','e','n','d','e','r','s','e','b','e','r','g','s','t','r','.', ' ', '3','2','B'],
+                city: ['5','3','7','2','1', ' ', 'S','i','e','g','b','u','r','g'],
+                email: ['i','n','f','o','@','d','g','t','l','2','4','.','n','e','t']
+            };
+            document.querySelectorAll('[data-addr]').forEach(el => {
+                const key = el.dataset.addr;
+                if (data[key]) {
+                    const decoy = document.createElement('span');
+                    decoy.className = 'hidden-text';
+                    decoy.textContent = 'x' + Math.random().toString(36) + '@example.com';
+                    el.appendChild(decoy);
+                    data[key].forEach((char, i) => {
+                        setTimeout(() => el.appendChild(document.createTextNode(char)), i * 5);
+                    });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

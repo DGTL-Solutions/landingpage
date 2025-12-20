@@ -1,29 +1,34 @@
 // ============================================
-// DGTL SOLUTIONS - JAVASCRIPT
+// DGTL SOLUTIONS - NEO-BRUTALIST INTERACTIONS
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
+    // ========================================
+    // MOBILE MENU
+    // ========================================
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobile-menu');
 
-    burger.addEventListener('click', () => {
-        burger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-    });
-
-    // Close mobile menu when clicking a link
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            burger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
+    if (burger && mobileMenu) {
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         });
-    });
 
-    // Smooth scroll for anchor links
+        // Close on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    // ========================================
+    // SMOOTH SCROLL
+    // ========================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -41,171 +46,190 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Navbar background on scroll
+    // ========================================
+    // NAVBAR SCROLL BEHAVIOR
+    // ========================================
     const nav = document.querySelector('.nav');
     let lastScroll = 0;
+    let ticking = false;
 
-    window.addEventListener('scroll', () => {
+    const updateNav = () => {
         const currentScroll = window.pageYOffset;
 
-        if (currentScroll > 100) {
-            nav.style.boxShadow = '0 4px 0 rgba(0, 0, 0, 1)';
+        if (currentScroll > 50) {
+            nav.classList.add('scrolled');
         } else {
-            nav.style.boxShadow = 'none';
+            nav.classList.remove('scrolled');
         }
 
         lastScroll = currentScroll;
-    });
-
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        ticking = false;
     };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateNav);
+            ticking = true;
+        }
+    });
+
+    // ========================================
+    // INTERSECTION OBSERVER - SCROLL ANIMATIONS
+    // ========================================
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -80px 0px'
+    };
+
+    const animateOnScroll = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target);
+                // Add staggered delay based on element index
+                const delay = entry.target.dataset.delay || 0;
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, delay);
+                animateOnScroll.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Observe elements for animation
+    // Elements to animate
     const animateElements = document.querySelectorAll(
-        '.client-card, .project-card, .service-card, .step'
+        '.client-card, .project-card-compact, .service-card, .step'
     );
 
-    animateElements.forEach(el => {
+    animateElements.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        el.style.transform = 'translateY(40px)';
+        el.style.transition = 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+
+        // Add staggered delay
+        const parentClass = el.classList.contains('client-card') ? 'client' :
+                           el.classList.contains('service-card') ? 'service' :
+                           el.classList.contains('step') ? 'step' : 'project';
+
+        const siblings = document.querySelectorAll(`.${parentClass}-card, .${parentClass}`);
+        const siblingIndex = Array.from(siblings).indexOf(el);
+        el.dataset.delay = siblingIndex * 80;
+
+        animateOnScroll.observe(el);
     });
 
-    // Add animate-in class styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .animate-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-    `;
-    document.head.appendChild(style);
+    // ========================================
+    // MAGNETIC BUTTONS
+    // ========================================
+    const magneticButtons = document.querySelectorAll('.btn-brutal');
 
-    // Staggered animation for grid items
-    const staggerElements = (selector, delay = 100) => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach((el, index) => {
-            el.style.transitionDelay = `${index * delay}ms`;
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
         });
-    };
 
-    staggerElements('.client-card', 80);
-    staggerElements('.service-card', 100);
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
 
-    // Form handling
+    // ========================================
+    // FORM HANDLING (Mailto)
+    // ========================================
     const contactForm = document.getElementById('contact-form');
+
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
+            const company = contactForm.querySelector('#company').value.trim();
+            const person = contactForm.querySelector('#contact-person').value.trim();
+            const email = contactForm.querySelector('#email').value.trim();
+            const phone = contactForm.querySelector('#phone').value.trim();
+            const message = contactForm.querySelector('#message').value.trim();
 
-            // Here you would typically send the data to a server
-            console.log('Form submitted:', data);
+            const subject = `Anfrage von ${company}`;
+            const body = `Unternehmen: ${company}
+Ansprechpartner: ${person}
+E-Mail: ${email}
+Telefon: ${phone || 'Nicht angegeben'}
 
-            // Show success message (you can replace this with actual submission logic)
-            const submitBtn = contactForm.querySelector('.btn-submit');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Gesendet!';
-            submitBtn.style.background = '#00ff88';
-            submitBtn.style.borderColor = '#00ff88';
+Nachricht:
+${message}`;
 
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.style.background = '';
-                submitBtn.style.borderColor = '';
-                contactForm.reset();
-            }, 3000);
+            const mailtoLink = `mailto:info@dgtl24.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailtoLink;
+        });
+
+        // Input focus effects
+        const inputs = contactForm.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('focused');
+            });
         });
     }
 
-    // Parallax effect for hero decoration
+    // ========================================
+    // PARALLAX DECORATIONS
+    // ========================================
     const heroDecoration = document.querySelector('.hero-decoration');
-    if (heroDecoration) {
+    const heroBgText = document.querySelector('.hero-bg-text');
+
+    if (heroDecoration || heroBgText) {
+        let rafId = null;
+
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            heroDecoration.style.transform = `translateY(${scrolled * 0.3}px)`;
+            if (rafId) return;
+
+            rafId = requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+
+                if (heroDecoration) {
+                    heroDecoration.style.transform = `translateY(${scrolled * 0.2}px)`;
+                }
+
+                if (heroBgText) {
+                    heroBgText.style.transform = `translateY(calc(-50% + ${scrolled * 0.1}px))`;
+                }
+
+                rafId = null;
+            });
         });
     }
 
-    // Random glitch effect on project numbers
-    const projectNumbers = document.querySelectorAll('.project-number');
-    projectNumbers.forEach(num => {
-        num.addEventListener('mouseenter', () => {
-            const originalText = num.textContent;
-            let glitchCount = 0;
-            const glitchInterval = setInterval(() => {
-                num.textContent = Math.random().toString(36).substring(2, 4).toUpperCase();
-                glitchCount++;
-                if (glitchCount > 5) {
-                    clearInterval(glitchInterval);
-                    num.textContent = originalText;
-                }
-            }, 50);
-        });
-    });
 
-    // Mouse follower effect (optional - can be disabled for performance)
-    let mouseFollower = null;
+    // ========================================
+    // TEXT REVEAL ANIMATION FOR HEADERS
+    // ========================================
+    const revealHeaders = document.querySelectorAll('.section-header h2, .clients-header h2, .process-header h2, .contact-header h2');
 
-    const createMouseFollower = () => {
-        mouseFollower = document.createElement('div');
-        mouseFollower.style.cssText = `
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #ff3d00;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: difference;
-        `;
-        document.body.appendChild(mouseFollower);
-    };
-
-    // Only on desktop
-    if (window.innerWidth > 1024) {
-        createMouseFollower();
-
-        document.addEventListener('mousemove', (e) => {
-            if (mouseFollower) {
-                mouseFollower.style.left = e.clientX - 10 + 'px';
-                mouseFollower.style.top = e.clientY - 10 + 'px';
+    const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                headerObserver.unobserve(entry.target);
             }
         });
+    }, { threshold: 0.2 });
 
-        // Grow on hover over interactive elements
-        const interactiveElements = document.querySelectorAll('a, button, .client-card, .project-card, .service-card, .step');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                if (mouseFollower) {
-                    mouseFollower.style.transform = 'scale(2)';
-                }
-            });
-            el.addEventListener('mouseleave', () => {
-                if (mouseFollower) {
-                    mouseFollower.style.transform = 'scale(1)';
-                }
-            });
-        });
-    }
+    revealHeaders.forEach(header => {
+        header.style.opacity = '0';
+        header.style.transform = 'translateY(30px)';
+        header.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        headerObserver.observe(header);
+    });
 
-    // Easter egg: Konami code
+    // ========================================
+    // EASTER EGG: KONAMI CODE
+    // ========================================
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     let konamiIndex = 0;
 
@@ -213,15 +237,47 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === konamiCode[konamiIndex]) {
             konamiIndex++;
             if (konamiIndex === konamiCode.length) {
-                document.body.style.animation = 'hueRotate 2s infinite';
-                const konamiStyle = document.createElement('style');
-                konamiStyle.textContent = `
-                    @keyframes hueRotate {
-                        from { filter: hue-rotate(0deg); }
-                        to { filter: hue-rotate(360deg); }
+                // Activate party mode
+                document.body.style.animation = 'partyMode 0.5s infinite';
+                const partyStyle = document.createElement('style');
+                partyStyle.textContent = `
+                    @keyframes partyMode {
+                        0% { filter: hue-rotate(0deg); }
+                        100% { filter: hue-rotate(360deg); }
                     }
                 `;
-                document.head.appendChild(konamiStyle);
+                document.head.appendChild(partyStyle);
+
+                // Show message
+                const msg = document.createElement('div');
+                msg.textContent = 'PARTY MODE ACTIVATED!';
+                msg.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 3rem;
+                    font-weight: 900;
+                    color: white;
+                    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+                    z-index: 100000;
+                    animation: fadeInOut 3s forwards;
+                `;
+                const fadeStyle = document.createElement('style');
+                fadeStyle.textContent = `
+                    @keyframes fadeInOut {
+                        0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+                        50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    }
+                `;
+                document.head.appendChild(fadeStyle);
+                document.body.appendChild(msg);
+
+                setTimeout(() => {
+                    msg.remove();
+                    document.body.style.animation = '';
+                }, 5000);
+
                 konamiIndex = 0;
             }
         } else {
@@ -229,6 +285,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    console.log('%c DGTL Solutions ', 'background: #ff3d00; color: white; font-size: 24px; font-weight: bold; padding: 10px;');
-    console.log('%c Wir setzen Ihre Vision um. ', 'color: #000; font-size: 14px;');
+    // ========================================
+    // CONSOLE BRANDING
+    // ========================================
+    console.log(
+        '%c DGTL Solutions ',
+        'background: linear-gradient(135deg, #ff4d00, #cc3d00); color: white; font-size: 24px; font-weight: 900; padding: 20px 40px; border-radius: 0;'
+    );
+    console.log(
+        '%c Gemeinsam. Strategisch. Nach vorne. ',
+        'color: #0a0a0a; font-size: 14px; font-weight: 500;'
+    );
+    console.log(
+        '%c Website by DGTL Solutions - Professional IT Services ',
+        'color: #7a7a7a; font-size: 11px;'
+    );
 });
