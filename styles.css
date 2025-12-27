@@ -7,9 +7,9 @@
     /* Core Palette */
     --black: #0a0a0a;
     --white: #fafafa;
-    --accent: #ff4d00;
-    --accent-dark: #cc3d00;
-    --accent-glow: rgba(255, 77, 0, 0.15);
+    --accent: #f52900;
+    --accent-dark: #0b617e;
+    --accent-glow: rgba(245, 41, 0, 0.15);
 
     /* Neutrals */
     --gray-900: #141414;
